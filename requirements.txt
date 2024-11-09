@@ -1,0 +1,11 @@
+firebase-admin
+streamlit
+flask
+spacy
+twilio
+streamlit
+transformers
+torch
+pysip
+vosk
+pyaudio
