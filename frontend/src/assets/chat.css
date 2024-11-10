@@ -1,0 +1,159 @@
+/* Center the main chat container */
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #87CEFA, #1E90FF);
+  }
+  
+  /* Card container with shadow and rounded edges */
+  .card {
+    width: 90%;
+    max-width: 500px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  /* Header with gradient background and centered text */
+  .card-header {
+    padding: 20px;
+    background: linear-gradient(135deg, #1E90FF, #4682B4);
+    color: #ffffff;
+    text-align: center;
+  }
+  
+  .icon {
+    font-size: 1.7rem;
+  }
+  
+  .card-header h1 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+  
+  .card-header p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+  
+  .card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Message container with smooth scroll */
+  .message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+    scroll-behavior: smooth;
+  }
+  
+  /* Individual message styling with bubble effect */
+  .message {
+    padding: 12px 18px;
+    border-radius: 15px;
+    max-width: 75%;
+    font-size: 1rem;
+    line-height: 1.5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
+    word-break: break-word;
+  }
+  
+  /* User messages with sky blue gradient and positioning */
+  .message.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #00BFFF, #1E90FF);
+    color: #ffffff;
+    border-bottom-right-radius: 0;
+  }
+  
+  /* AI messages with soft light blue background */
+  .message.ai {
+    align-self: flex-start;
+    background: #f0f8ff;
+    color: #333333;
+    border-bottom-left-radius: 0;
+  }
+  
+  /* Container for input and send button with divider */
+  .input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  /* Styled input field with shadow effect */
+  .input-container input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #add8e6;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-container input[type="text"]:focus {
+    border-color: #1E90FF;
+    outline: none;
+  }
+  
+  /* Send button with gradient background and hover effect */
+  .input-container button {
+    padding: 10px 15px;
+    background: linear-gradient(135deg, #00BFFF, #1E90FF);
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .input-container button:hover {
+    background: linear-gradient(135deg, #1E90FF, #4682B4);
+    transform: translateY(-2px);
+  }
+  
+  /* Footer with subtle text and shadow */
+  .footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888888;
+    padding: 10px 20px;
+  }
+  
+  .footer .disclaimer {
+    margin-top: 5px;
+    font-style: italic;
+    font-size: 0.75rem;
+    color: #555555;
+  }
+  
+  /* Animations for subtle entrance effects */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
