@@ -6,6 +6,11 @@ twilio
 streamlit
 transformers
 torch
-pysip
-vosk
-pyaudio
+python-dotenv
+flask_socketio
+SpeechRecognition
+pyttsx3
+pypiwin32
+google-generativeai
+pydub
+accelerate

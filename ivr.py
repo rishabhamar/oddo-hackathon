@@ -1,378 +1,311 @@
-# from flask import Flask, request, Response
-# import requests
-# from twilio.twiml.voice_response import VoiceResponse, Gather
-# from twilio.rest import Client
-# import json
-# import os
-# from datetime import datetime
-# import firebase_admin
-# from firebase_admin import credentials, firestore
-# import streamlit as st
-# from transformers import AutoModelForCausalLM, AutoTokenizer
-# import torch
-# import threading
-
-# @st.cache_resource
-# def load_model():
-#     tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")
-#     model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium")
-#     return tokenizer, model
-
-# tokenizer, model = load_model()
-
-# flask_app = Flask(__name__)
-
-# # You'll need to replace these with your actual values
-# TWILIO_ACCOUNT_SID = "USdcbfe267f637b1355f16e93b153d5e64"
-# TWILIO_AUTH_TOKEN = "6be19c83f4543832b9620c2059c84975"
-# client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-
-# # Store conversations in memory (replace with database in production)
-# cred = credentials.Certificate("credentials.json")
-# firebase_admin.initialize_app(cred)
-
-# db=firestore.client()
-
-# conversations = {}
-
-# def get_dialogpt_response(user_input, chat_history_ids=None):
-#     """Get response from DialoGPT"""
-#     # Encode user input
-#     new_user_input_ids = tokenizer.encode(user_input + tokenizer.eos_token, return_tensors='pt')
-
-#     # Append to chat history if it exists
-#     if chat_history_ids is not None:
-#         bot_input_ids = torch.cat([chat_history_ids, new_user_input_ids], dim=-1)
-#     else:
-#         bot_input_ids = new_user_input_ids
-
-#     # Generate response
-#     chat_history_ids = model.generate(
-#         bot_input_ids,
-#         max_length=1000,
-#         pad_token_id=tokenizer.eos_token_id,
-#         no_repeat_ngram_size=3,
-#         do_sample=True,
-#         top_k=100,
-#         top_p=0.7,
-#         temperature=0.8
-#     )
-
-#     # Decode and return response
-#     response = tokenizer.decode(chat_history_ids[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
-#     return response, chat_history_ids
-
-# # Streamlit interface
-# def main():
-#     st.title("DialoGPT IVR System")
-
-#      # Add phone call section
-#     st.subheader("Make a Call")
-#     phone_number = st.text_input("Enter phone number (with country code, e.g., +91XXXXXXXXXX)")
-    
-#     if st.button("Make Call"):
-#         if phone_number:
-#             try:
-#                 # Make the call
-#                 call = client.calls.create(
-#                     to=phone_number,
-#                     from_=TWILIO_PHONE_NUMBER,
-#                     url=f"https://your-ngrok-url.ngrok.io/voice"  # Replace with your ngrok URL
-#                 )
-#                 st.success(f"Call initiated! Call SID: {call.sid}")
-#             except Exception as e:
-#                 st.error(f"Error making call: {str(e)}")
-#         else:
-#             st.warning("Please enter a phone number")
-    
-#     # Initialize session state
-#     if 'chat_history' not in st.session_state:
-#         st.session_state.chat_history = []
-#     if 'model_history_ids' not in st.session_state:
-#         st.session_state.model_history_ids = None
-    
-#     # Chat interface
-#     st.subheader("Chat Interface")
-    
-#     # Display chat history
-#     for message in st.session_state.chat_history:
-#         with st.chat_message(message["role"]):
-#             st.write(message["content"])
-    
-#     # Chat input
-#     if user_input := st.chat_input("Type your message here..."):
-#         # Add user message to chat
-#         st.session_state.chat_history.append({"role": "user", "content": user_input})
-#         with st.chat_message("user"):
-#             st.write(user_input)
-        
-#         # Get bot response
-#         bot_response, st.session_state.model_history_ids = get_dialogpt_response(
-#             user_input, 
-#             st.session_state.model_history_ids
-#         )
-        
-#         # Add bot response to chat
-#         st.session_state.chat_history.append({"role": "assistant", "content": bot_response})
-#         with st.chat_message("assistant"):
-#             st.write(bot_response)
-    
-#     # IVR Status
-#     st.subheader("IVR System Status")
-#     st.write(f"Active calls: {len(conversations)}")
-    
-#     # Display IVR logs if any exist
-#     if conversations:
-#         st.json(conversations)
-    
-#     db.collection("chat history").add(conversations)
-
-# # Flask routes for IVR
-# @flask_app.route("/voice", methods=['POST'])
-# def voice():
-#     """Handle incoming calls"""
-#     response = VoiceResponse()
-    
-#     # Initialize the call session
-#     caller_id = request.values.get('From', '')
-#     if caller_id not in conversations:
-#         conversations[caller_id] = {
-#             'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-#             'messages': [],
-#             'model_history_ids': None
-#         }
-    
-#     # Welcome message and gather speech input
-#     gather = Gather(
-#         input='speech',
-#         action='/handle-input',
-#         language='en-IN',
-#         timeout=3,
-#         speech_timeout='auto'
-#     )
-#     gather.say("Welcome to our AI assistant. How may I help you today?", voice='Polly.Aditi')
-#     response.append(gather)
-    
-#     return str(response)
-
-# @flask_app.route("/handle-input", methods=['POST'])
-# def handle_input():
-#     """Handle speech input and generate response"""
-#     response = VoiceResponse()
-#     caller_id = request.values.get('From', '')
-    
-#     # Get the speech input
-#     user_speech = request.values.get('SpeechResult', '')
-    
-#     if user_speech:
-#         # Store the user message
-#         conversations[caller_id]['messages'].append({
-#             'role': 'user',
-#             'content': user_speech
-#         })
-        
-#         # Get response from DialoGPT
-#         bot_response, conversations[caller_id]['model_history_ids'] = get_dialogpt_response(
-#             user_speech,
-#             conversations[caller_id].get('model_history_ids')
-#         )
-        
-#         # Store the bot response
-#         conversations[caller_id]['messages'].append({
-#             'role': 'assistant',
-#             'content': bot_response
-#         })
-        
-#         # Convert bot response to speech
-#         gather = Gather(
-#             input='speech',
-#             action='/handle-input',
-#             language='en-IN',
-#             timeout=3,
-#             speech_timeout='auto'
-#         )
-#         gather.say(bot_response, voice='Polly.Aditi')
-#         response.append(gather)
-#     else:
-#         response.say("I didn't catch that. Could you please repeat?", voice='Polly.Aditi')
-#         response.redirect('/voice')
-    
-#     return str(response)
-
-# def run_flask():
-#     """Run Flask app"""
-#     flask_app.run(port=5000)
-
-# if __name__ == "__main__":
-#     # Start Flask in a separate thread
-#     flask_thread = threading.Thread(target=run_flask)
-#     flask_thread.start()
-    
-#     # Run Streamlit
-#     main()
-
-# # def get_chatbot_response(message, session_id):
-# #     """
-# #     Function to integrate with your chatbot
-# #     Replace this with your actual chatbot integration
-# #     """
-# #     # Example: You can integrate with DialoGPT or any other open-source chatbot
-# #     response = "Thank you for your message: " + message
-# #     return response
-
-# # @app.route("/voice", methods=['POST'])
-# # def voice():
-# #     """Handle incoming calls"""
-# #     response = VoiceResponse()
-    
-# #     # Initialize the call session
-# #     caller_id = request.values.get('From', '')
-# #     if caller_id not in conversations:
-# #         conversations[caller_id] = {
-# #             'timestamp': datetime.now(),
-# #             'messages': []
-# #         }
-    
-# #     # Welcome message and gather speech input
-# #     gather = Gather(
-# #         input='speech',
-# #         action='/handle-input',
-# #         language='en-IN',  # Set to Indian English
-# #         timeout=3,
-# #         speech_timeout='auto'
-# #     )
-# #     gather.say("Welcome to our service. How may I help you today?", voice='Polly.Aditi')  # Using Indian voice
-# #     response.append(gather)
-    
-# #     return str(response)
-
-# # @app.route("/handle-input", methods=['POST'])
-# # def handle_input():
-# #     """Handle speech input and generate response"""
-# #     response = VoiceResponse()
-# #     caller_id = request.values.get('From', '')
-    
-# #     # Get the speech input
-# #     user_speech = request.values.get('SpeechResult', '')
-    
-# #     if user_speech:
-# #         # Store the user message
-# #         conversations[caller_id]['messages'].append({
-# #             'role': 'user',
-# #             'content': user_speech
-# #         })
-        
-# #         # Get response from chatbot
-# #         bot_response = get_chatbot_response(user_speech, caller_id)
-        
-# #         # Store the bot response
-# #         conversations[caller_id]['messages'].append({
-# #             'role': 'assistant',
-# #             'content': bot_response
-# #         })
-        
-# #         # Convert bot response to speech
-# #         gather = Gather(
-# #             input='speech',
-# #             action='/handle-input',
-# #             language='en-IN',
-# #             timeout=3,
-# #             speech_timeout='auto'
-# #         )
-# #         gather.say(bot_response, voice='Polly.Aditi')
-# #         response.append(gather)
-# #     else:
-# #         response.say("I didn't catch that. Could you please repeat?", voice='Polly.Aditi')
-# #         response.redirect('/voice')
-    
-# #     return str(response)
-
-# # @app.route("/webhook", methods=['POST'])
-# # def webhook():
-# #     """Handle webhook events from Twilio"""
-# #     return Response(status=200)
+from flask import Flask, request
+from twilio.twiml.voice_response import VoiceResponse, Gather
+from twilio.rest import Client
+from dotenv import load_dotenv
+import os
+import logging
+import google.generativeai as genai
+import requests
+from urllib.request import urlopen
 
 
-# # if __name__ == "__main__":
-# #     app.run(debug=True, port=5000)
+# Load environment variables
+load_dotenv()
 
-from flask import Flask
-from pysip import SIPServer
-import vosk
-import json
-import wave
-import pyaudio
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-class SIPIVRServer:
-    def __init__(self):
-        self.sip = SIPServer(
-            bind_address="0.0.0.0",
-            bind_port=5060,
-            realm="ivr.local"
+# Twilio credentials
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = os.getenv('TWILIO_PHONE_NUMBER')
+USER_PHONE_NUMBER = os.getenv('USER_PHONE_NUMBER')
+WEBHOOK_BASE_URL = os.getenv('WEBHOOK_BASE_URL')  # Add this to your .env file
+HUGGINGFACE_API_KEY = os.getenv('HUGGINGFACE_API_KEY')
+
+# Validate environment variables
+required_env_vars = [
+    'TWILIO_ACCOUNT_SID', 
+    'TWILIO_AUTH_TOKEN', 
+    'TWILIO_PHONE_NUMBER', 
+    'USER_PHONE_NUMBER',
+    'WEBHOOK_BASE_URL',
+    'HUGGINGFACE_API_KEY'
+]
+
+
+for var in required_env_vars:
+    if not os.getenv(var):
+        raise ValueError(f"Missing required environment variable: {var}")
+
+client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+
+def gemini():
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+    # Create the model with configuration
+    generation_config = {
+        "temperature": 1,
+        "top_p": 0.95,
+        "top_k": 40,
+        "max_output_tokens": 8192,
+        "response_mime_type": "text/plain",
+    }
+
+    # system instruction with PDF knowledge
+    system_instruction = f"""You are Sarah, a ClinicQ healthcare assistant. You have knowledge of both healthcare and government schemes.
+
+    # ClinicQ Assistant System Instructions 2.0
+
+    ## 1. Introduction Protocol
+    - Use introduction ONLY for first message: "Hello! I'm Sarah, your ClinicQ healthcare assistant. I'm here to help you with medical information and healthcare queries. How are you feeling today?"
+    - For all follow-up messages: DO NOT repeat the introduction
+    - If user returns after long pause: Say "Welcome back! How can I help you today?"
+
+    ## 2. Response Structure
+    Always follow this pattern:
+    1. Direct response to query
+    2. Relevant information
+    3. Next steps or questions
+    4. Give response in the same language as users when possible
+
+    ## 3. Healthcare Services Information
+
+    ### Must Cover:
+    - Basic medical information
+    - Medication details
+    - General health guidance
+    - Healthcare programs
+    - Insurance basics
+    - Hospital services
+    - Preventive care
+
+    ### Healthcare Programs & Schemes
+    When asked about healthcare schemes:
+    1. Confirm if they want:
+    - Government healthcare programs
+    - Insurance schemes
+    - Hospital programs
+    - Wellness programs
+    2. Provide relevant category information
+    3. Share reliable sources for more details
+
+    Example Response:
+    "I understand you're interested in healthcare schemes. Would you like information about:
+    - Government healthcare programs
+    - Insurance options
+    - Hospital wellness programs
+    Please specify your interest so I can guide you better."
+
+    ## 4. Core Communication Rules
+    - NO repeated introductions
+    - ONE clear response per query
+    - Stay on topic
+    - Be concise but complete
+    - Guide users step by step
+
+    ## 5. Do Not:
+    - Repeat introduction in every message
+    - Give circular responses
+    - Restart conversations unnecessarily
+    - Leave queries unaddressed
+    - Provide outdated information
+
+    ## 6. Response Templates
+
+    ### For Healthcare Schemes:
+    I can help you with information about [specific type] healthcare schemes.
+
+    Key Points:
+    1. [Relevant point 1]
+    2. [Relevant point 2]
+    3. [Relevant point 3]
+
+    For detailed information, you can:
+    - [Action step 1]
+    - [Action step 2]
+
+    Would you like specific information about any of these aspects?
+
+
+    ### For General Queries:
+    Regarding [topic]:
+
+    [Direct answer]
+
+    Additional Information:
+    - [Key point 1]
+    - [Key point 2]
+
+    How else can I assist you with this?
+
+
+    ## 7. Navigation Rules
+    - Keep track of conversation context
+    - Reference previous queries when relevant
+    - Guide users to specific information
+    - Provide clear next steps
+    - Offer relevant alternatives
+
+    ## 8. Quality Checks
+    Before sending response, verify:
+    - No repeated introductions
+    - Direct answer provided
+    - Clear next steps
+    - Relevant to user's query
+    - Professional tone maintained
+
+    ## 9. Error Recovery
+    If conversation goes off track:
+    - Acknowledge the deviation
+    - Redirect to relevant information
+    - Clarify user's needs
+    - Provide correct information
+    - Ask specific follow-up questions
+
+    ## 10. Continuous Flow
+    - Maintain conversation continuity
+    - Reference previous information when relevant
+    - Build on established context
+    - Progress logically through topics
+    - Avoid circular discussions    
+
+    Remember: Your role is to provide clear, accurate healthcare information efficiently, without unnecessary repetition or confusion. You are from India, so your responses should be India-centric and understand most of the Indian language.
+
+    ## 11. Appointment Booking Protocol
+    When user wants to book an appointment:
+    1. Collect required information in this order:
+    - Patient name
+    - Phone number
+    - Email
+    - Preferred doctor (if any)
+    - Preferred date and time
+    - Hospital choice (if not specified, use default)
+    2. Validate each piece of information
+    3. Confirm all details before booking
+    4. Provide booking confirmation and reference number
+
+    Example appointment dialogue:
+    "I'll help you book an appointment. Please provide:
+    1. Patient's full name
+    2. Contact number
+    3. Email address
+    4. Preferred doctor (optional)
+    5. Preferred date and time
+    6. Hospital preference (optional)"
+
+    and ask the user if they want to confirm the appointment if they say yes and you have all the requird data then book the appointment and provide the reference number. and if not ask for the missing data and then confirm the appointment. by asking should i confirm and show the details. if user says yes confirm, yes, i want to book or anything similar to yes then book them othherwise can
+    """
+
+    # Initialize model with system instruction
+    model = genai.GenerativeModel(
+        model_name="gemini-1.5-flash",
+        generation_config=generation_config,
+        system_instruction=system_instruction
+    )
+
+    return model
+
+@app.route("/initiate-call", methods=['GET','POST'])
+def initiate():
+    """Initiate an outbound call to the user"""
+    try:
+        call = client.calls.create(
+            to=USER_PHONE_NUMBER,
+            from_=TWILIO_PHONE_NUMBER,
+            url=f'{WEBHOOK_BASE_URL}/voice'
         )
-        
-        # Initialize speech recognition
-        self.model = vosk.Model("vosk-model-en-in-0.4")
-        self.recognizer = vosk.KaldiRecognizer(self.model, 16000)
-        
-    def start(self):
-        @self.sip.incoming_call
-        def handle_call(call):
-            # Answer call
-            call.answer()
-            
-            # Record audio
-            audio = self.record_audio()
-            
-            # Convert speech to text
-            text = self.speech_to_text(audio)
-            
-            # Get AI response
-            response = "This is Test" # get_dialogpt_response(text)
-            
-            # Play response
-            self.play_response(call, response)
-            
-            # End call
-            call.hangup()
+        logger.info(f"Call initiated with SID: {call.sid}")
+        return {"message": "Call initiated successfully", "call_sid": call.sid}, 200
+    except Exception as e:
+        logger.error(f"Error initiating call: {str(e)}")
+        return {"error": "Failed to initiate call"}, 500
+
+@app.route("/voice", methods=['POST'])
+def voice():
+    """Handle incoming voice calls and initial greeting"""
+    resp = VoiceResponse()
     
-    def record_audio(self):
-        CHUNK = 1024
-        FORMAT = pyaudio.paInt16
-        CHANNELS = 1
-        RATE = 16000
-        RECORD_SECONDS = 5
-        
-        p = pyaudio.PyAudio()
-        stream = p.open(format=FORMAT,
-                       channels=CHANNELS,
-                       rate=RATE,
-                       input=True,
-                       frames_per_buffer=CHUNK)
-        
-        frames = []
-        for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-            data = stream.read(CHUNK)
-            frames.append(data)
-        
-        stream.stop_stream()
-        stream.close()
-        p.terminate()
-        
-        return b''.join(frames)
+    # Initial greeting
+    gather = Gather(
+        input='speech',
+        timeout=2,
+        language='en-US',
+        hints=['hello', 'hi', 'help', 'goodbye'],
+        action='/handle-input',
+        method='POST',
+    )
     
-    def speech_to_text(self, audio):
-        if self.recognizer.AcceptWaveform(audio):
-            result = json.loads(self.recognizer.Result())
-            return result['text']
-        return ""
+    gather.say(
+        "Welcome to the AI voice assistant. How can i help you",
+        voice="Polly.Aditi"
+    )
+    
+    resp.append(gather)
+    
+    # If the user doesn't say anything, try again
+    resp.redirect('/voice', method='POST')
+    return str(resp)
+
+@app.route("/handle-input", methods=['POST'])
+def handle_input():
+    """Process the user's speech input"""
+    resp = VoiceResponse()
+    
+    # Get the user's speech input
+    user_speech = request.values.get('SpeechResult', '')
+    confidence = request.values.get('Confidence', 0)
+    
+    logger.info(f"Received speech input: {user_speech} (confidence: {confidence})")
+    # logger.info(f"{text}")
+    
+    if user_speech.lower() in ['goodbye', 'bye']:
+        resp.say("Thank you for chatting! Goodbye!", voice="Polly.Aditi")
+        resp.hangup()
+    elif user_speech:
+        # Echo back what the user said
+        chat_session = gemini()
+        response = chat_session.generate_content(user_speech)
+        print(response.text)
+        resp.say(f"{response.text}", voice="Polly.Aditi")
+        
+        # Offer another interaction
+        gather = Gather(
+            input='speech',
+            timeout=5,
+            language='en-US',
+            action='/handle-input',
+            method='POST',
+            hints=['goodbye', 'bye', 'help']
+        )
+        gather.say(
+            "or say goodbye to end the call.",
+            voice="Polly.Aditi"
+        )
+        resp.append(gather)
+    else:
+        resp.say(
+            "I'm sorry, I didn't catch that. Let's try again.",
+            voice="Polly.Aditi"
+        )
+        resp.redirect('/voice', method='POST')
+    
+    return str(resp)
+
+@app.errorhandler(Exception)
+def handle_error(error):
+    """Global error handler"""
+    logger.error(f"An error occurred: {str(error)}")
+    resp = VoiceResponse()
+    resp.say(
+        "I'm sorry, something went wrong. Please try again later.",
+        voice="Polly.Aditi"
+    )
+    resp.hangup()
+    return str(resp)
 
 if __name__ == "__main__":
-    # Start SIP server
-    server = SIPIVRServer()
-    server.start()
-    
-    # Start Flask app
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, port=5000)
