@@ -1,0 +1,417 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+header {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0.1 auto;
+  padding: 0 1rem;
+}
+
+header .logo {
+  font-size: 2rem;
+  color: #0073e6;
+}
+
+header nav a {
+  margin-left: 1rem;
+  color: #656262;
+  text-decoration: none;
+  font-weight:normal;
+}
+
+header nav a:hover {
+  color: #0073e6;
+}
+
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: linear-gradient(to right, #f0f9ff, #e0f7fa);
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons button {
+  padding: 0.8rem 1.5rem;
+  margin: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.signup {
+  background-color: #0073e6;
+  color: #fff;
+  border-radius: 7px;
+}
+
+.login {
+  background-color: transparent;
+  color: #0073e6;
+  border: 2px solid #0073e6;
+  border-radius: 7px;
+}
+
+.signup:hover {
+  background-color:#0036e6
+}
+.login:hover {
+  background-color: #ffffff;
+}
+
+/* Key Features Section Styling */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f0f8ff; /* Light background color */
+}
+
+/* General styling for each feature card */
+.feature-card {
+  height: 150px;
+  width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Individual colors for each feature card */
+.feature-card.schedule {
+  background-color: #007bff; /* Blue color */
+}
+
+.feature-card.message {
+  background-color: #28a745; /* Green color */
+}
+
+.feature-card.reminders {
+  background-color: #6f42c1; /* Purple color */
+}
+
+/* Button styling within each feature card */
+.feature-card button {
+  margin-top: 15px;
+  padding: 13px 25px;
+  background-color: white;
+  color: #454141;
+  border: none;
+  border-radius: 5px;
+  font-weight:lighter;
+  cursor: pointer;
+}
+
+.feature-card button:hover {
+  background-color: #e0e0e0;
+}
+
+
+/* Additional Services Section */
+.additional-services {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+}
+
+.additional-services h3 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.service-card {
+  background-color: #f9fafc;
+  color: #fff;
+  padding: 40px;
+  margin: 5px auto;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card h4 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.service-card p {
+  font-size: 1rem;
+  color: #f3f4f6;
+}
+
+/* Color Variants for Each Card */
+.service-card-blue {
+  background-color: #3b82f6; /* Light blue */
+}
+
+.service-card-green {
+  background-color: #10b981; /* Green */
+}
+
+.service-card-purple {
+  background-color: #8b5cf6; /* Purple */
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Consult with Doctors and AI Health Assistant Section */
+.consult-assistant {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px 20px;
+  background-color: #f9fafc;
+}
+/* Consult with Doctors and AI Health Assistant Section */
+.service-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.service-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card h4 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 150px;
+  background-color: #e5e7eb;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button Styles */
+.consult-button {
+  background-color: #3b82f6; /* Blue */
+  color: #fff;
+}
+
+.assistant-button {
+  background-color: #10b981; /* Green */
+  color: #fff;
+}
+
+.consult-button:hover {
+  background-color: #2563eb;
+}
+
+.assistant-button:hover {
+  background-color: #059669;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+/* About Section */
+.about-section {
+  padding: 2rem 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-section h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.about-section p {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.about-section h3 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.about-section ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  text-align: left;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.about-section ul li {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* Active link in header */
+header nav a.active {
+  color: #0073e6;
+  font-weight: bold;
+}
+.back-button {
+  display: inline-block;
+  background-color: #0073e6;
+  color: white;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.back-button:hover {
+  background-color: #0036e6;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+/* Form Container */
+.form-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  margin: 20px auto;
+}
+
+.form-title {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form Fields */
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Buttons */
+.form-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-button:hover {
+  background-color: #0056b3;
+}
+
+/* Links */
+.form-link {
+  margin-top: 20px;
+  color: #555;
+}
+
+.form-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.form-link a:hover {
+  text-decoration: underline;
+}

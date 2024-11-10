@@ -1,0 +1,105 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .doctor-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .photo {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.25rem 0.5rem;
+    color: #fff;
+    border-radius: 5px;
+  }
+  
+  .available {
+    background-color: #4caf50;
+  }
+  
+  .unavailable {
+    background-color: #f44336;
+  }
+  
+  .content {
+    padding: 1rem;
+  }
+  
+  .name {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .specialty,
+  .degree,
+  .experience {
+    color: #555;
+    margin: 0.25rem 0;
+  }
+  
+  .rating {
+    font-size: 1rem;
+    color: #ffb400;
+    margin-top: 0.5rem;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .appoint-button,
+  .rate-button {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .appoint-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .appoint-button:disabled {
+    background-color: #ccc;
+  }
+  
+  .rate-button {
+    background-color: #fff;
+    color: #007bff;
+    border: 1px solid #007bff;
+  }
+  
