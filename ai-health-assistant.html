@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClinicQ - AI Health Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Header Section -->
+    <header class="header">
+      <a href="/" class="logo">
+        <span class="icon">✨</span> ClinicQ
+      </a>
+      <a href="/" class="back-link">← Back to Home</a>
+    </header>
+    <!-- Main Content Section -->
+    <main class="main">
+      <div class="card">
+        <div class="card-header">
+          <h1><span class="icon">☀️</span> AI Health Assistant</h1>
+          <p>Your personal guide to natural health and wellness</p>
+        </div>
+        <div class="card-content">
+          <div class="message-container" id="messageContainer">
+            <div class="message ai">
+              Hello! I'm your AI Health Assistant. How can I help you today?
+            </div>
+            <!-- User and AI messages will go here -->
+          </div>
+          <div class="input-container">
+            <input type="text" id="userInput" placeholder="Type your health-related question...">
+            <button onclick="sendMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js">
+  window.addEventListener("load", () => {
+        // Function to add a message to the chat window
+        function addMessage(content, sender = "user") {
+            const messageContainer = document.getElementById("messageContainer");
+            const messageDiv = document.createElement("div");
+            messageDiv.className = `message ${sender}`;
+            messageDiv.textContent = content;
+            messageContainer.appendChild(messageDiv);
+            messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to the latest message
+        }
+    
+        // Function to simulate AI response after a delay
+        function simulateAIResponse() {
+            setTimeout(() => {
+                addMessage("I'm here to assist you with your health-related questions. Please provide more details.", "ai");
+            }, 1000); // 1-second delay for the AI response
+        }
+    
+        // Automatically input and send "Book Consultation" message on page load
+        function sendInitialMessage() {
+            const userInput = document.getElementById("userInput");
+    
+            // Set the input value to "Book Consultation"
+            userInput.value = "Book Consultation";
+    
+            // Trigger the sendMessage function if input is non-empty
+            if (userInput.value.trim()) {
+              // Add user message to the chat window
+              addMessage(userInput.value, "user");
+    
+              // Clear the input field after sending the message
+              userInput.value = "";
+    
+              // Simulate the AI response
+              simulateAIResponse();
+          }
+      }
+    
+      // Call the function to send the initial message when the page loads
+      sendInitialMessage();
+  });
+  </script>
+</body>
+</html>
+<!-- Modal Structure -->
+<div id="aiHealthModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal()">&times;</span>
+    <iframe src="ai-health-assistant.html" class="modal-iframe"></iframe>
+  </div>
+</div>
+</html>
+
+
