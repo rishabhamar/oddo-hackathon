@@ -18,7 +18,7 @@ header .container {
   justify-content: space-between;
   align-items: center;
   max-width: 900px;
-  margin: 1 auto;
+  margin: 2 auto;
   padding: 0 2rem;
 }
 
@@ -148,14 +148,16 @@ header nav a:hover {
 
 /* Additional Services Section */
 .additional-services {
-  text-align: center;
+  text-align:center;
   padding: 40px 20px;
   display: flex;
 }
 
 .additional-services h3 {
+  text-align: center;
   font-size: 2rem;
   color: #333;
+  margin-top: 5px;
   margin-bottom: 10px;
   font-weight: 600;
 }
@@ -365,7 +367,40 @@ header {
 .notification-icon:hover {
     color: #007bff; /* Change color on hover for a nice effect */
 }
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 /* Footer */
 footer {
@@ -373,4 +408,358 @@ footer {
   color: #fff;
   padding: 2rem 1rem;
   text-align: center;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+}
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+header {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: auto;
+  padding: 0 2rem;
+}
+
+header .logo {
+  font-size: 2rem;
+  color: #0073e6;
+}
+
+header nav a {
+  margin-left: 1rem;
+  color: #656262;
+  text-decoration: none;
+}
+
+header nav a:hover {
+  color: #0073e6;
+}
+
+/* Schedule Appointment Section */
+.schedule-appointment {
+  padding: 40px 20px;
+  max-width: 600px; /* Limit width for better layout */
+  margin: auto; /* Center the section */
+  background-color: #f9fafc; /* Light background color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.schedule-appointment h2 {
+  text-align: center; /* Center heading */
+  font-size: 2rem; /* Font size for heading */
+  color: #333; /* Dark color for contrast */
+  margin-bottom: 20px; /* Space below heading */
+}
+
+.schedule-appointment form {
+  display: flex; /* Flexbox for form layout */
+  flex-direction: column; /* Stack inputs vertically */
+}
+
+.schedule-appointment label {
+  margin-bottom: 5px; /* Space below labels */
+}
+
+.schedule-appointment input[type="text"],
+.schedule-appointment input[type="email"],
+.schedule-appointment input[type="date"],
+.schedule-appointment input[type="time"] {
+  padding: 10px; /* Padding inside inputs */
+  margin-bottom: 15px; /* Space below inputs */
+  border-radius: 5px; /* Rounded corners for inputs */
+  border: 1px solid #ccc; /* Light border */
+}
+
+.schedule-appointment button[type="submit"] {
+  padding: 10px; /* Padding inside button */
+  background-color: #0073e6; /* Button color */
+  color: white; /* Text color for button */
+  border-radius: 5px; /* Rounded corners for button */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Pointer on hover */
+}
+
+.schedule-appointment button[type="submit"]:hover {
+  background-color: #005bb5; /* Darker shade on hover */
+}
+
+/* Footer Section */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+header {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+}
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: auto;
+  padding: 0 2rem;
+}
+header .logo {
+  font-size: 2rem;
+  color: #0073e6;
+}
+header nav a {
+  margin-left: 1rem;
+  color: #656262;
+  text-decoration: none;
+}
+header nav a:hover {
+  color: #0073e6;
+}
+.schedule-appointment {
+  padding: 40px 20px;
+  max-width: 600px; /* Limit width for better layout */
+  margin: auto; /* Center the section */
+  background-color: #f9fafc; /* Light background color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.schedule-appointment h2 {
+  text-align: center; /* Center heading */
+  font-size: 2rem; /* Font size for heading */
+  color: #333; /* Dark color for contrast */
+  margin-bottom: 20px; /* Space below heading */
+}
+
+.schedule-appointment form {
+  display: flex; /* Flexbox for form layout */
+  flex-direction: column; /* Stack inputs vertically */
+}
+
+.schedule-appointment label {
+  margin-bottom: 5px; /* Space below labels */
+}
+
+.schedule-appointment input[type="text"],
+.schedule-appointment input[type="email"],
+.schedule-appointment input[type="date"],
+.schedule-appointment input[type="time"] {
+  padding: 10px; /* Padding inside inputs */
+  margin-bottom: 15px; /* Space below inputs */
+  border-radius: 5px; /* Rounded corners for inputs */
+  border: 1px solid #ccc; /* Light border */
+}
+
+.schedule-appointment button[type="submit"] {
+  padding: 10px; /* Padding inside button */
+  background-color: #0073e6; /* Button color */
+  color: white; /* Text color for button */
+  border-radius: 5px; /* Rounded corners for button */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Pointer on hover */
+}
+
+.schedule-appointment button[type="submit"]:hover {
+  background-color: #005bb5; /* Darker shade on hover */
+}
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+/* Reviews Section */
+.reviews-section {
+  padding: 40px 20px;
+  max-width: 800px; /* Limit width for better layout */
+  margin: auto; /* Center the section */
+}
+
+.reviews-section h2 {
+  text-align: center; /* Center heading */
+  font-size: 2rem; /* Font size for heading */
+  color: #333; /* Dark color for contrast */
+  margin-bottom: 20px; /* Space below heading */
+}
+
+.review-card {
+  background-color: #f9fafc; /* Light background color for reviews */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px;
+  margin-bottom: 20px; /* Space between reviews */
+  display: flex; /* Flexbox layout for profile photo and content */
+}
+
+.profile-photo {
+  width: 60px; /* Set width for profile photo */
+  height: 60px; /* Set height for profile photo */
+  border-radius: 50%; /* Make it circular */
+  margin-right: 15px; /* Space between photo and content */
+}
+
+.review-content {
+  flex-grow: 1; /* Allow content to take remaining space */
+}
+
+.rating {
+  font-size: 1.2rem; /* Font size for rating stars */
+}
+/* Reviews Section */
+.reviews-section {
+  padding: 40px 20px;
+  max-width: 800px; /* Limit width for better layout */
+  margin: auto; /* Center the section */
+  background-color: #f0f4f8; /* Light background color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.reviews-section h2 {
+  text-align: center; /* Center heading */
+  font-size: 2.5rem; /* Increased font size for visibility */
+  color: #333; /* Dark color for contrast */
+  margin-bottom: 20px; /* Space below heading */
+}
+
+.review-card {
+  background-color: #ffffff; /* White background for review cards */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for cards */
+  padding: 20px;
+  margin-bottom: 20px; /* Space between reviews */
+  display: flex; /* Flexbox layout for profile photo and content */
+  align-items: center; /* Center items vertically */
+}
+
+.profile-photo {
+  width: 60px; /* Set width for profile photo */
+  height: 60px; /* Set height for profile photo */
+  border-radius: 50%; /* Make it circular */
+  margin-right: 15px; /* Space between photo and content */
+}
+
+.review-content {
+  flex-grow: 1; /* Allow content to take remaining space */
+}
+
+.rating {
+  font-size: 1.5rem; /* Larger font size for rating stars */
+  color: #ffcc00; /* Gold color for stars */
+}
+
+.review-content h3 {
+  font-size: 1.2rem; /* User name font size */
+  color: #0073e6; /* Primary color for user names */
+  margin-bottom: 5px; /* Space below user name */
+}
+
+.review-content p {
+  font-size: 1rem; /* Review text font size */
+  color: #555; /* Dark gray color for review text */
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 600px) {
+  .reviews-section {
+      padding: 20px;
+      max-width: 100%; /* Full width on smaller screens */
+  }
+
+  .review-card {
+      flex-direction: column; /* Stack photo and content on smaller screens */
+      align-items: flex-start; /* Align items to the start on small screens */
+  }
+
+  .profile-photo {
+      margin-bottom: 10px; /* Space below photo on small screens */
+  }
+}
+/* Appointment Confirmation Styles */
+.appointment-confirmation {
+  text-align: center;
+  padding: 40px;
+  background-color: #f9fafc;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
+}
+
+.appointment-confirmation h2 {
+  color: #2b2d42;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.appointment-confirmation p {
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.appointment-confirmation a {
+  text-decoration: none;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.appointment-confirmation a:hover {
+  background-color: #45a049;
+}
+.appointment-confirmation {
+  display: block !important;
 }

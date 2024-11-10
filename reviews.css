@@ -1,0 +1,37 @@
+/* Reviews Section */
+.reviews-section {
+    padding: 40px 20px;
+    max-width: 800px; /* Limit width for better layout */
+    margin: auto; /* Center the section */
+}
+
+.reviews-section h2 {
+    text-align: center; /* Center heading */
+    font-size: 2rem; /* Font size for heading */
+    color: #333; /* Dark color for contrast */
+    margin-bottom: 20px; /* Space below heading */
+}
+
+.review-card {
+    background-color: #f9fafc; /* Light background color for reviews */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+    margin-bottom: 20px; /* Space between reviews */
+    display: flex; /* Flexbox layout for profile photo and content */
+}
+
+.profile-photo {
+    width: 60px; /* Set width for profile photo */
+    height: 60px; /* Set height for profile photo */
+    border-radius: 50%; /* Make it circular */
+    margin-right: 15px; /* Space between photo and content */
+}
+
+.review-content {
+    flex-grow: 1; /* Allow content to take remaining space */
+}
+
+.rating {
+    font-size: 1.2rem; /* Font size for rating stars */
+}
