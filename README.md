@@ -20,3 +20,10 @@ video Link : [https://drive.google.com/file/d/1kVJ-G0T0WyO80jMG0z6p92hlG1PlzBdI/
 
 ## About
 ![Screenshot 2024-11-10 120455](https://github.com/user-attachments/assets/0853cfb8-f578-4ac9-8edd-c15375aaccbd)
+
+## Appointment
+![WhatsApp Image 2024-11-10 at 12 07 43_088cc78e](https://github.com/user-attachments/assets/0ded58e2-98a0-4c6e-9e38-ef9454bd0a8b)
+
+## Price - Teir 
+![WhatsApp Image 2024-11-10 at 12 07 57_d0d6e7f9](https://github.com/user-attachments/assets/4070af67-0790-4ec6-8476-1f7ba16a70ca)
+
